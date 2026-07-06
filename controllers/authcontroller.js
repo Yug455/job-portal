@@ -68,3 +68,7 @@ const login = async(req,res)=>{
         "message":"login succesully"
     })
 }
+module.exports={
+    signup,
+    login
+}

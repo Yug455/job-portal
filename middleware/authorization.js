@@ -23,3 +23,6 @@ if(!cookie){
         })
     }
 }
+module.exports={
+    authorization,
+}
