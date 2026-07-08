@@ -2,11 +2,11 @@ const mongoose = require("mongoose")
 const companyschema = new mongoose.Schema({
     companyname:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     companywebsite:{
         type:String,
-        required:true
     },
     location:{
         type:String,
@@ -22,7 +22,6 @@ const companyschema = new mongoose.Schema({
     },
     userId:{
         ref:"user",
-        required:true
     }
 },
 {timestamps:true}
