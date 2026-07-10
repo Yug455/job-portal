@@ -24,10 +24,6 @@ const jobschema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    position:{
-        type:String,
-        required:true,
-    },
     company:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
@@ -43,4 +39,4 @@ const jobschema = new mongoose.Schema({
     },
 },{timestamps:true})
 const job = mongoose.model("job",jobschema)
-module.exports = jobs
+module.exports = job

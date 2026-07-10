@@ -6,7 +6,8 @@ const cors = require("cors")
 const app = express()
 const connectDB = require("./config/database")
 connectDB()
-const userRouter=require("./routes/userRoutes")
+const userRouter=require("./routes/userRoutes");
+const companyRouter = require("./routes/companyRoutes");
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cookieParser())
@@ -15,6 +16,7 @@ app.use(cors({
     credentials: true,
 }))
 app.use("/user",userRouter)
+app.use("company",companyRouter)
 app.listen(3000,(req,res)=>{
     console.log(`server started at ${3000}`)
 })

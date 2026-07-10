@@ -125,3 +125,9 @@ const deleteCompany = async(req,res)=>{
         })
     }
 }
+module.exports={
+    companyRejister,
+    companyDeatails,
+    getCompany,
+    deleteCompany
+}
