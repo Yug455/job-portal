@@ -79,6 +79,74 @@ const getJob = async(req,res)=>{
         })
     }
 }
+const updateJob = async(req,res)=>{
+   try{ const jobId=req.params.id
+    if(!jobId || !mongoose.isValidObjectId(jobId)){
+        return res.status(400).json({
+            "message":"pls enter a valid object id"
+        })
+    } 
+    const notvalid = ["company","createdby"]
+    const fields = Object.keys(req.body)
+    const isnotvalid= fields.some(field => notvalid.includes(field))
+    if(isnotvalid){
+        return res.status(400).json({"message":"pls enter valid fields"})
+    }
+    const fetchedJob = await Job.findById(jobId)
+    if(!fetchedJob){
+        return res.status(404).json({
+            "message":"didnt find any user"
+        })
+    }
+    const company =await Company.findById(fetchedJob.company)
+    if (!company) {
+    return res.status(404).json({
+        message: "Company not found"
+    });
+}
+    if(company.userId.toString() !== req.user._id.toString()){
+        return res.status(403).json({
+            "message":"not authorized for this request"
+        })
+    }
+    let updatedJobDocument={...req.body}
+    for (const items in updatedJobDocument){
+        if(typeof updatedJobDocument[items] === "string"){
+           updatedJobDocument[items]= updatedJobDocument[items].trim()
+           if (updatedJobDocument[items].length === 0) {
+             return res.status(400).json({
+               message: `${items} cannot be empty`
+           });
+        }
+      }
+    }
+    if("salary" in updatedJobDocument){
+       updatedJobDocument.salary=Number(updatedJobDocument.salary)
+
+       if (Number.isNaN(updatedJobDocument.salary)){
+           return res.status(400).json({
+               "message":"pls enter a number"
+           })
+       }
+
+    }
+    const isUpdated=await Job.updateOne( // using update one only specify fields change 
+        {_id:jobId},
+        updatedJobDocument  // mongo internally will use $set 
+    )
+   if(isUpdated.modifiedCount == 0){
+   return res.status(400).json({
+        "message":"did not updated succesfully"
+    })
+   }
+    res.status(200).json({
+        "message":"job updated succesfully"
+    })}catch(err){
+        res.status(500).json({
+            "message":err.message
+        })
+    }
+}
 const deleteJob = async(req,res) =>{
     try{
         const jobId=req.params.id
@@ -114,4 +182,10 @@ const deleteJob = async(req,res) =>{
             "message":err.message
         })
     }
+}
+module.exports = {
+    addingJob,
+    getJob,
+    updateJob,
+    deleteJob,
 }

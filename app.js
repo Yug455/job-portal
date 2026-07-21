@@ -8,6 +8,7 @@ const connectDB = require("./config/database")
 connectDB()
 const userRouter=require("./routes/userRoutes");
 const companyRouter = require("./routes/companyRoutes");
+const jobRouter = require("./routes/jobRoutes");
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cookieParser())
@@ -17,6 +18,7 @@ app.use(cors({
 }))
 app.use("/user",userRouter)
 app.use("company",companyRouter)
+app.use("/jobs",jobRouter)
 app.listen(3000,(req,res)=>{
     console.log(`server started at ${3000}`)
 })
