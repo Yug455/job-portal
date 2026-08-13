@@ -1,10 +1,6 @@
 const mongoose=require("mongoose");
 
-const userprofileschema=new mongoose.connect({
-    user:{
-        ref:"user",
-        type:mongoose.Schema.Types.ObjectId,
-    },
+const userprofileschema=new mongoose.Schema({
     bio:{
         type:String,
     },
@@ -14,12 +10,14 @@ const userprofileschema=new mongoose.connect({
     resume:{
         type:String,
     },
-    resumeoriginalname:{
-        type:String
-    },
     profilephoto:{
         type:String,
         default:""
+    },
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"user"
     }
 })
-const userprofile = mongoose.connect("userprofile",userprofileschema)
+const Userprofile = mongoose.model("userprofile",userprofileschema)
+module.exports=Userprofile

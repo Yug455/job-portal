@@ -34,9 +34,12 @@ const jobschema = new mongoose.Schema({
         required:true,
         ref:"user"
     },
-    application:{
-        type:String,
-    },
+    applications:[
+       {
+         type:mongoose.Schema.Types.ObjectId,
+         ref:"application"
+       }
+    ],
 },{timestamps:true})
 const job = mongoose.model("job",jobschema)
 module.exports = job

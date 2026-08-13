@@ -16,7 +16,7 @@ if(!isvalid){
         "message":"enter valid fields",
     })
 }
-if(Object.keys(req.body.length)===0){
+if(Object.keys(req.body).length === 0){
 return res.status(400).json({"message":"fields are empty"})
 }
 const {username,emailid,password,phoneNo,role}= req.body
@@ -49,23 +49,25 @@ const login = async(req,res)=>{
             "message":"pls enter emailid and password"
         })
     }
-    const userrecords =await user.findOne({emailid})
-    if(!userrecords===0){
+    const userrecords =await user.findOne({emailid}).select("+password")
+    if(!userrecords){
         return res.status(400).json({
             "message":"no records found"
         })
     }
+    console.log(userrecords.password)
     const hashpassword = userrecords.password
     const ispaswword =await bcrypt.compare(password,hashpassword)
     if(!ispaswword){
-        return res.json({
+        return res.status(401).json({
             "message":"pls enter a valid password"
         })
     }
    const token=await jwt.sign({_id:userrecords._id},jwt_key,{expiresIn:"9hr"})
     res.cookie("usercookie",token)
     res.status(200).json({
-        "message":"login succesully"
+        "message":"login succesully",
+        userrecords,
     })
 }
 module.exports={

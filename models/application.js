@@ -7,13 +7,13 @@ const applicationschema = new mongoose.connect({
  },
  jobrefrence:{
      type:mongoose.Schema.Types.ObjectId,
-    ref:"job",
+     ref:"job",
  },
  status:{
     type:String,
-    enum:["pending",Accepted],
+    enum:["pending","Accepted","Rejected"],
     default:"pending"
- }
+ },
 },{timestamps:true})
 const application = mongoose.model("application",applicationschema)
 module.exports=application

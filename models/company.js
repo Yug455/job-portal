@@ -21,6 +21,7 @@ const companyschema = new mongoose.Schema({
         type:String,   
     },
     userId:{
+        type: mongoose.Schema.Types.ObjectId,
         ref:"user",
     }
 },
