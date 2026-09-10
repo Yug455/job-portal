@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon backend/app.js",
     "build":"npm install && npm install --prefix frontend/my-project && npm run build --prefix frontend/my-project",
-    "start":"nodemon backend/app.js"
+    "start":"node backend/app.js"
   },
   "author": "",
   "license": "ISC",
