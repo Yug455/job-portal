@@ -5,7 +5,7 @@ connectDB =async()=>{
         await mongoose.connect(CLUSTER_KEY)
         console.log("database connected")
     }catch(err){
-        console.log(err.message)
+        console.log("mongodb connection error"+err)
     }
 }
 module.exports=connectDB
