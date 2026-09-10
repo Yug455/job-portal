@@ -1,0 +1,10 @@
+const express = require("express")
+const applicationRouter = express.Router()
+const {newApplication,getUserApplication,getApplicantDetails,getAdminApplications,updateApplicationStatus} = require("../controllers/application")
+const {authorization}= require("../middleware/authorization")
+applicationRouter.post("/newapplication/:jobrefrence",authorization,newApplication)
+applicationRouter.get("/getuserapplicant/:id",authorization,getApplicantDetails)
+applicationRouter.get("/getapplication",authorization,getUserApplication)
+applicationRouter.get("/getadminapplication/:jobId",authorization,getAdminApplications)
+applicationRouter.post("/updateapplication/:updateStatus/:applicationId",authorization,updateApplicationStatus)
+module.exports=applicationRouter

@@ -1,0 +1,11 @@
+const express = require("express")
+const jobRouter = express.Router()
+const {addingJob,getJob,getAllJob,getAllJobsOfAdmin,updateJob,deleteJob,} = require("../controllers/jobposting")
+const {authorization}= require("../middleware/authorization")
+jobRouter.post("/postjob/:id",authorization,addingJob)
+jobRouter.get("/getjobs/:id",authorization,getJob)
+jobRouter.get("/getalljobs",authorization,getAllJob)
+jobRouter.get("/getadminalljobs",authorization,getAllJobsOfAdmin)
+jobRouter.post("/updatejob",authorization,updateJob)
+jobRouter.delete("/deletejob/:id",authorization,deleteJob)
+module.exports=jobRouter
